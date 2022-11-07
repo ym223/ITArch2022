@@ -7,7 +7,7 @@ import android.os.IBinder
 class RemoteService : Service() {
 
     private val binder = object : IMyAidlInterface.Stub() {
-        override fun getMessage(msg: String): String {
+        override fun getMessage(): String {
             return "Hello World"
         }
     }
