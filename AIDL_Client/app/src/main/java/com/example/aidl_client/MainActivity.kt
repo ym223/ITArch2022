@@ -5,7 +5,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
@@ -16,7 +15,7 @@ import com.example.aidl_service.IMyAidlInterface
 class MainActivity : Activity() {
     lateinit var binding: ActivityMainBinding
     private var bond = true
-    private var isFather = true
+    private var isPapa = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +28,11 @@ class MainActivity : Activity() {
                 try {
                     text = iMyAidlInterface?.getOperation("あ").toString()
                     binding.operation.text = text
+                    if(isPapa){
+                        binding.image.setImageResource(R.drawable.papa_walk)
+                    } else {
+                        binding.image.setImageResource(R.drawable.ebi_walk)
+                    }
                 } catch (e: RemoteException) {
                     e.printStackTrace()
                 }
@@ -37,6 +41,11 @@ class MainActivity : Activity() {
                 try {
                     text = iMyAidlInterface?.getOperation("い").toString()
                     binding.operation.text = text
+                    if(isPapa){
+                        binding.image.setImageResource(R.drawable.papa_sleep)
+                    } else {
+                        binding.image.setImageResource(R.drawable.ebi_sleep)
+                    }
                 } catch (e: RemoteException) {
                     e.printStackTrace()
                 }
@@ -45,24 +54,31 @@ class MainActivity : Activity() {
                 try {
                     text = iMyAidlInterface?.getOperation("う").toString()
                     binding.operation.text = text
+                    if(isPapa){
+                        binding.image.setImageResource(R.drawable.papa_sports)
+                    } else {
+                        binding.image.setImageResource(R.drawable.ebi_sports)
+                    }
                 } catch (e: RemoteException) {
                     e.printStackTrace()
                 }
             }
             binding.e.setOnClickListener {
                 try {
-                    isFather = false
+                    isPapa = false
                     text = iMyAidlInterface?.getOperation("え").toString()
                     binding.operation.text = text
+                    binding.image.setImageResource(R.drawable.ebi)
                 } catch (e: RemoteException) {
                     e.printStackTrace()
                 }
             }
             binding.o.setOnClickListener {
                 try {
-                    isFather = true
+                    isPapa = true
                     text = iMyAidlInterface?.getOperation("お").toString()
                     binding.operation.text = text
+                    binding.image.setImageResource(R.drawable.papa)
                 } catch (e: RemoteException) {
                     e.printStackTrace()
                 }
