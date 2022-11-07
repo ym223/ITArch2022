@@ -9,24 +9,60 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
-import androidx.annotation.RequiresApi
+import android.util.Log
 import com.example.aidl_client.databinding.ActivityMainBinding
 import com.example.aidl_service.IMyAidlInterface
 
 class MainActivity : Activity() {
     lateinit var binding: ActivityMainBinding
-    private var bond = false
+    private var bond = true
+    private var isFather = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button.setOnClickListener {
-            if (bond) {
+        var text = ""
+        if (bond) {
+            binding.a.setOnClickListener {
                 try {
-                    val text = iMyAidlInterface?.message
-                    binding.textView.text = text
+                    text = iMyAidlInterface?.getOperation("あ").toString()
+                    binding.operation.text = text
+                } catch (e: RemoteException) {
+                    e.printStackTrace()
+                }
+            }
+            binding.i.setOnClickListener {
+                try {
+                    text = iMyAidlInterface?.getOperation("い").toString()
+                    binding.operation.text = text
+                } catch (e: RemoteException) {
+                    e.printStackTrace()
+                }
+            }
+            binding.u.setOnClickListener {
+                try {
+                    text = iMyAidlInterface?.getOperation("う").toString()
+                    binding.operation.text = text
+                } catch (e: RemoteException) {
+                    e.printStackTrace()
+                }
+            }
+            binding.e.setOnClickListener {
+                try {
+                    isFather = false
+                    text = iMyAidlInterface?.getOperation("え").toString()
+                    binding.operation.text = text
+                } catch (e: RemoteException) {
+                    e.printStackTrace()
+                }
+            }
+            binding.o.setOnClickListener {
+                try {
+                    isFather = true
+                    text = iMyAidlInterface?.getOperation("お").toString()
+                    binding.operation.text = text
                 } catch (e: RemoteException) {
                     e.printStackTrace()
                 }
@@ -39,6 +75,7 @@ class MainActivity : Activity() {
         val it = Intent("MyRemoteService")
         it.setPackage("com.example.aidl_service")
         bindService(it, connection, Context.BIND_AUTO_CREATE)
+        Log.d("い", bindService(it, connection, Context.BIND_AUTO_CREATE).toString())
     }
 
     override fun onDestroy() {

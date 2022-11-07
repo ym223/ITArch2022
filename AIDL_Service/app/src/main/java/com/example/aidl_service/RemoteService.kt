@@ -6,9 +6,17 @@ import android.os.IBinder
 
 class RemoteService : Service() {
 
+    val operations = mapOf<String, String>(
+        "あ" to "あるく",
+        "い" to "いねむりする",
+        "う" to "うんどうする",
+        "え" to "えびになる",
+        "お" to "おとうさんになる"
+    )
+
     private val binder = object : IMyAidlInterface.Stub() {
-        override fun getMessage(): String {
-            return "Hello World"
+        override fun getOperation(operation: String): String? {
+            return operations[operation]
         }
     }
 
