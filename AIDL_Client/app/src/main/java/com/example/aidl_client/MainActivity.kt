@@ -8,7 +8,6 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
-import android.util.Log
 import com.example.aidl_client.databinding.ActivityMainBinding
 import com.example.aidl_service.IMyAidlInterface
 
@@ -91,7 +90,6 @@ class MainActivity : Activity() {
         val it = Intent("MyRemoteService")
         it.setPackage("com.example.aidl_service")
         bindService(it, connection, Context.BIND_AUTO_CREATE)
-        Log.d("い", bindService(it, connection, Context.BIND_AUTO_CREATE).toString())
     }
 
     override fun onDestroy() {
